@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Person Information System - Zambia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #19875A, #1e3c72);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .name-header {
+            text-align: center;
+            font-size: 24px;
+            color: #19875A;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #1e3c72;
+            font-weight: bold;
+        }
+
+        h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h3 {
+            color: #19875A;
+            margin: 20px 0 10px 0;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #19875A;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #0e5e3e;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .quiz-question {
+            background: #f0f4fc;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+
+        .quiz-question p {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .quiz-options label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .truefalse {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .truefalse label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .oneword-input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        .result {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 20px;
+            background: #e0ffe0;
+            border-radius: 10px;
+        }
+
+        .wrong-answers {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff0f0;
+            border-radius: 10px;
+            text-align: left;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .wrong-answers h3 {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        .wrong-answers li {
+            margin-bottom: 10px;
+            padding: 8px;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .country-fixed {
+            background: #e0e0e0;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .section-title {
+            background: #1e3c72;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 20px 0 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="name-header">
+        🇿🇲 Maximino Phiri
+    </div>
+
+    <!-- Page 1: Person Information -->
+    <div id="page1" class="page active">
+        <h2>📋 Personal Information</h2>
+        <div class="form-group">
+            <label>Full Name:</label>
+            <input type="text" id="name" placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+            <label>Date of Birth:</label>
+            <input type="date" id="dob">
+        </div>
+        <div class="form-group">
+            <label>Country:</label>
+            <div class="country-fixed">🇿🇲 Zambia</div>
+        </div>
+        <div class="form-group">
+            <label>Province:</label>
+            <select id="province">
+                <option value="">Select Province</option>
+                <option value="Lusaka">Lusaka</option>
+                <option value="Copperbelt">Copperbelt</option>
+                <option value="Southern">Southern</option>
+                <option value="Central">Central</option>
+                <option value="Eastern">Eastern</option>
+                <option value="Western">Western</option>
+                <option value="Northern">Northern</option>
+                <option value="Luapula">Luapula</option>
+                <option value="North-Western">North-Western</option>
+                <option value="Muchinga">Muchinga</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>City/District:</label>
+            <input type="text" id="city" placeholder="Enter your city or district">
+        </div>
+        <div class="form-group">
+            <label>Area:</label>
+            <input type="text" id="area" placeholder="Enter area (e.g., Kamwala, Avondale)">
+        </div>
+        <button onclick="goToPage2()">Next ➡</button>
+    </div>
+
+    <!-- Page 2: Program of Study -->
+    <div id="page2" class="page">
+        <h2>📚 Program of Study</h2>
+        <div class="form-group">
+            <label>Program of Study:</label>
+            <select id="program">
+                <option value="">Select Program</option>
+                <option>Computer Science</option>
+                <option>Information Technology</option>
+                <option>Software Engineering</option>
+                <option>Data Science</option>
+                <option>Cyber Security</option>
+                <option>Information Systems</option>
+                <option>Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Lecture Group (e.g., Group A, Group B):</label>
+            <input type="text" id="lectureGroup" placeholder="Enter your lecture group">
+        </div>
+        <div class="form-group">
+            <label>Tutorial Group (e.g., T1, T2):</label>
+            <input type="text" id="tutorialGroup" placeholder="Enter your tutorial group">
+        </div>
+        <button onclick="goToPage3()">Start Quiz ➡</button>
+        <button onclick="goBackToPage1()" style="background: gray; margin-top: 10px;">⬅ Back</button>
+    </div>
+
+    <!-- Page 3: Java Quiz (30 Questions) -->
+    <div id="page3" class="page">
+        <h2>☕ Java Quiz - 30 Questions</h2>
+        <div id="quizContainer"></div>
+        <button onclick="submitQuiz()">Submit Answers</button>
+        <button onclick="goBackToPage2()" style="background: gray; margin-top: 10px;">⬅ Back to Program</button>
+        <div id="quizResult"></div>
+    </div>
+</div>
+
+<script>
+    // ========== 30 JAVA QUESTIONS ==========
+    // Part 1: Multiple Choice (10 questions)
+    const mcQuestions = [
+        { text: "1. What is the correct way to print 'Hello' in Java?", options: ["print('Hello');", "System.out.println('Hello');", "Console.log('Hello');", "echo 'Hello';"], correct: 1 },
+        { text: "2. Which data type is used for decimal numbers in Java?", options: ["int", "char", "double", "boolean"], correct: 2 },
+        { text: "3. What does 'JVM' stand for?", options: ["Java Visual Machine", "Java Virtual Machine", "Java Variable Method", "Java Version Manager"], correct: 1 },
+        { text: "4. Which keyword is used to create a class in Java?", options: ["class", "struct", "object", "define"], correct: 0 },
+        { text: "5. What is the size of an 'int' in Java?", options: ["16 bits", "32 bits", "64 bits", "8 bits"], correct: 1 },
+        { text: "6. Which symbol is used for single-line comments in Java?", options: ["//", "/*", "#", "<!--"], correct: 0 },
+        { text: "7. What is the entry point of a Java program?", options: ["main()", "start()", "run()", "init()"], correct: 0 },
+        { text: "8. Which of these is not a Java keyword?", options: ["static", "void", "unsigned", "class"], correct: 2 },
+        { text: "9. What does 'OOP' stand for?", options: ["Object Oriented Programming", "Output Oriented Program", "Operation Oriented Process", "Object Organized Protocol"], correct: 0 },
+        { text: "10. Which method is used to get user input in Java?", options: ["Scanner.nextInt()", "System.in.read()", "Both A and B", "None of the above"], correct: 2 }
+    ];
+
+    // Part 2: True or False (10 questions)
+    const tfQuestions = [
+        { text: "11. Java is a platform-independent language.", correct: "true" },
+        { text: "12. The 'final' keyword in Java means the variable can be changed.", correct: "false" },
+        { text: "13. Java supports multiple inheritance using classes.", correct: "false" },
+        { text: "14. 'public static void main(String[] args)' is the correct main method signature.", correct: "true" },
+        { text: "15. Arrays in Java can change size after creation.", correct: "false" },
+        { text: "16. The 'break' statement is used to exit a loop.", correct: "true" },
+        { text: "17. Java uses pointers like C++.", correct: "false" },
+        { text: "18. The 'this' keyword refers to the current object.", correct: "true" },
+        { text: "19. A constructor can have a return type.", correct: "false" },
+        { text: "20. Java was originally developed by Sun Microsystems.", correct: "true" }
+    ];
+
+    // Part 3: One-word answer (10 questions)
+    const owQuestions = [
+        { text: "21. What is the parent class of all classes in Java?", correct: "object", keywords: ["object"] },
+        { text: "22. Which keyword is used to inherit a class in Java?", correct: "extends", keywords: ["extends"] },
+        { text: "23. Which keyword is used to create an object in Java?", correct: "new", keywords: ["new"] },
+        { text: "24. What is the default value of an int variable in Java?", correct: "0", keywords: ["0"] },
+        { text: "25. Which collection interface does not allow duplicate elements?", correct: "set", keywords: ["set"] },
+        { text: "26. Which package is automatically imported in Java?", correct: "java.lang", keywords: ["lang", "java.lang"] },
+        { text: "27. What is the return type of main method in Java?", correct: "void", keywords: ["void"] },
+        { text: "28. Which keyword is used to handle exceptions?", correct: "try", keywords: ["try"] },
+        { text: "29. What is the size of a char in Java (in bits)?", correct: "16", keywords: ["16"] },
+        { text: "30. Which interface is the root of the collection hierarchy?", correct: "collection", keywords: ["collection"] }
+    ];
+
+    let mcAnswers = new Array(10).fill(null);
+    let tfAnswers = new Array(10).fill(null);
+    let owAnswers = new Array(10).fill("");
+
+    function loadQuiz() {
+        const container = document.getElementById('quizContainer');
+        container.innerHTML = '';
+
+        // Multiple Choice Section
+        container.innerHTML += '<div class="section-title">📝 Part 1: Multiple Choice (Questions 1-10)</div>';
+        mcQuestions.forEach((q, idx) => {
+            container.innerHTML += `
+                <div class="quiz-question">
+                    <p>${q.text}</p>
+                    <div class="quiz-options">
+                        ${q.options.map((opt, optIdx) => `
+                            <label>
+                                <input type="radio" name="mc${idx}" value="${optIdx}" onchange="saveMC(${idx}, ${optIdx})">
+                                ${opt}
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        });
+
+        // True/False Section
+        container.innerHTML += '<div class="section-title">✅❌ Part 2: True or False (Questions 11-20)</div>';
+        tfQuestions.forEach((q, idx) => {
+            container.innerHTML += `
+                <div class="quiz-question">
+                    <p>${q.text}</p>
+                    <div class="truefalse">
+                        <label><input type="radio" name="tf${idx}" value="true" onchange="saveTF(${idx}, 'true')"> True</label>
+                        <label><input type="radio" name="tf${idx}" value="false" onchange="saveTF(${idx}, 'false')"> False</label>
+                    </div>
+                </div>
+            `;
+        });
+
+        // One-Word Answer Section
+        container.innerHTML += '<div class="section-title">✏️ Part 3: One-Word Answer (Questions 21-30)</div>';
+        owQuestions.forEach((q, idx) => {
+            container.innerHTML += `
+                <div class="quiz-question">
+                    <p>${q.text}</p>
+                    <input type="text" class="oneword-input" id="ow${idx}" placeholder="Type your one-word answer here" onchange="saveOW(${idx})">
+                </div>
+            `;
+        });
+    }
+
+    function saveMC(qIdx, ans) {
+        mcAnswers[qIdx] = ans;
+    }
+
+    function saveTF(qIdx, ans) {
+        tfAnswers[qIdx] = ans;
+    }
+
+    function saveOW(idx) {
+        owAnswers[idx] = document.getElementById(`ow${idx}`).value.trim().toLowerCase();
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        const wrongList = [];
+
+        // Grade Multiple Choice
+        for (let i = 0; i < mcQuestions.length; i++) {
+            const isCorrect = (mcAnswers[i] === mcQuestions[i].correct);
+            if (isCorrect) {
+                score++;
+            } else {
+                wrongList.push({
+                    type: "MC",
+                    question: mcQuestions[i].text,
+                    userAnswer: mcAnswers[i] !== null ? mcQuestions[i].options[mcAnswers[i]] : "Not answered",
+                    correctAnswer: mcQuestions[i].options[mcQuestions[i].correct]
+                });
+            }
+        }
+
+        // Grade True/False
+        for (let i = 0; i < tfQuestions.length; i++) {
+            const isCorrect = (tfAnswers[i] === tfQuestions[i].correct);
+            if (isCorrect) {
+                score++;
+            } else {
+                wrongList.push({
+                    type: "T/F",
+                    question: tfQuestions[i].text,
+                    userAnswer: tfAnswers[i] !== null ? tfAnswers[i] : "Not answered",
+                    correctAnswer: tfQuestions[i].correct
+                });
+            }
+        }
+
+        // Grade One-Word
+        for (let i = 0; i < owQuestions.length; i++) {
+            const userAns = owAnswers[i];
+            const q = owQuestions[i];
+            let isCorrect = false;
+            for (let kw of q.keywords) {
+                if (userAns === kw) {
+                    isCorrect = true;
+                    break;
+                }
+            }
+            if (isCorrect) {
+                score++;
+            } else {
+                wrongList.push({
+                    type: "One-Word",
+                    question: q.text,
+                    userAnswer: userAns !== "" ? userAns : "Not answered",
+                    correctAnswer: q.correct
+                });
+            }
+        }
+
+        // Display Result
+        let wrongHtml = '';
+        if (wrongList.length > 0) {
+            wrongHtml = '<div class="wrong-answers"><h3>❌ Questions you got wrong (with correct answers):</h3><ul>';
+            wrongList.forEach(item => {
+                wrongHtml += `<li><strong>[${item.type}] ${item.question}</strong><br>Your answer: ${item.userAnswer}<br>✅ Correct answer: ${item.correctAnswer}</li>`;
+            });
+            wrongHtml += '</ul></div>';
+        } else {
+            wrongHtml = '<div class="wrong-answers" style="background:#e0ffe0;"><h3>🎉 PERFECT! You got all 30 answers correct!</h3></div>';
+        }
+
+        const resultDiv = document.getElementById('quizResult');
+        resultDiv.innerHTML = `
+            <div class="result">
+                🎉 Your Score: ${score} / 30 🎉<br>
+                ${score >= 20 ? '✅ Great job! You passed!' : '📚 Keep learning Java! You can do better next time.'}
+            </div>
+            ${wrongHtml}
+        `;
+    }
+
+    // Page navigation
+    function goToPage2() {
+        const name = document.getElementById('name').value;
+        const province = document.getElementById('province').value;
+        const city = document.getElementById('city').value;
+        
+        if (!name) {
+            alert('Please enter your name');
+            return;
+        }
+        if (!province) {
+            alert('Please select your province');
+            return;
+        }
+        if (!city) {
+            alert('Please enter your city/district');
+            return;
+        }
+        
+        document.getElementById('page1').classList.remove('active');
+        document.getElementById('page2').classList.add('active');
+    }
+
+    function goToPage3() {
+        const program = document.getElementById('program').value;
+        const lectureGroup = document.getElementById('lectureGroup').value;
+        const tutorialGroup = document.getElementById('tutorialGroup').value;
+        
+        if (!program) {
+            alert('Please select your program of study');
+            return;
+        }
+        if (!lectureGroup) {
+            alert('Please enter your lecture group');
+            return;
+        }
+        if (!tutorialGroup) {
+            alert('Please enter your tutorial group');
+            return;
+        }
+        
+        document.getElementById('page2').classList.remove('active');
+        document.getElementById('page3').classList.add('active');
+        loadQuiz();
+        document.getElementById('quizResult').innerHTML = '';
+        
+        // Reset answers
+        mcAnswers = new Array(10).fill(null);
+        tfAnswers = new Array(10).fill(null);
+        owAnswers = new Array(10).fill("");
+    }
+
+    function goBackToPage1() {
+        document.getElementById('page2').classList.remove('active');
+        document.getElementById('page1').classList.add('active');
+    }
+
+    function goBackToPage2() {
+        document.getElementById('page3').classList.remove('active');
+        document.getElementById('page2').classList.add('active');
+        document.getElementById('quizResult').innerHTML = '';
+    }
+</script>
+
+</body>
+</html>
